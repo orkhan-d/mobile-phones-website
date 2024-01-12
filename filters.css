@@ -9,7 +9,7 @@
     padding: 1em;
     background-color: rgb(249, 248, 248);
     border-radius: 1em;
-    height: 100%;
+    height: fit-content;
 }
 
 .filter-name {

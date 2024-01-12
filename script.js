@@ -87,56 +87,64 @@ generate_html = () => {
 
 generate_html();
 
-const from_price = document.querySelector('.from-price');
-const to_price = document.querySelector('.to-price');
+let from_price = document.querySelector('.from-price');
+let to_price = document.querySelector('.to-price');
+let from_rom = document.querySelector('.from-rom');
+let to_rom = document.querySelector('.to-rom');
+let from_ram = document.querySelector('.from-ram');
+let to_ram = document.querySelector('.to-ram');
+let only_discounted = document.querySelector('.only-discounted');
+let makers = [...document.querySelectorAll('.maker')];
 
-const from_rom = document.querySelector('.from-rom');
-const to_rom = document.querySelector('.to-rom');
+const check_price = (phone_price) => {
+    return (!from_price.value || phone_price >= Number(from_price.value)) &&
+    (!to_price.value || phone_price <= Number(to_price.value))
+}
 
-const makers = document.querySelectorAll('.maker');
-makers.forEach(cb => {
-    cb.addEventListener(
-        'change', () => {
-            filter_results()
-        }
-    )
-});
+const check_rom = (phone_rom) => {
+    return (!from_rom.value || phone_rom >= Number(from_rom.value)) &&
+    (!to_rom.value || phone_rom <= Number(to_rom.value))
+}
 
-const filter_results = () => {
-    let checkeds = Object.values(makers).filter(cb => cb.checked).map(cb => cb.value);
+const check_ram = (phone_ram) => {
+    return (!from_ram.value || phone_ram >= Number(from_ram.value)) &&
+    (!to_ram.value || phone_ram <= Number(to_ram.value))
+}
 
+const apply_filters = () => {
+    console.log(Boolean(only_discounted.value));
     phones_to_show = phones.filter(phone => (
-        (from_price.value ? phone.price >= Number(from_price.value) : true) &&
-        (to_price.value ? phone.price <= Number(to_price.value) : true) &&
-        (from_rom.value ? phone.rom >= Number(from_rom.value) : true) &&
-        (to_rom.value ? phone.rom <= Number(to_rom.value) : true) &&
-        checkeds.includes(phone.maker)
+        check_price(phone.price) && 
+        check_rom(phone.rom) &&
+        check_ram(phone.ram) &&
+        makers.filter(cb => cb.checked).map(cb => cb.name).includes(phone.maker) &&
+        (!only_discounted.checked || phone.discount)
     ));
 
     generate_html();
 };
 
-from_price.addEventListener(
-    'input',
-    () => {
-        filter_results()
-    }
-);
-to_price.addEventListener(
-    'input',
-    () => {
-        filter_results()
-    }
-);
-from_rom.addEventListener(
-    'input',
-    () => {
-        filter_results()
-    }
-);
-to_rom.addEventListener(
-    'input',
-    () => {
-        filter_results()
-    }
-);
+const reset_filters = () => {
+    from_price.value = "";
+    to_price.value = "";
+    from_rom.value = "";
+    to_rom.value = "";
+    from_ram.value = "";
+    to_ram.value = "";
+    only_discounted.checked = false;
+    makers.forEach(element => {
+        element.checked = true
+    });
+};
+
+const apply_filters_btn = document.querySelector('.apply-filters-btn');
+const reset_filters_btn = document.querySelector('.reset-filters-btn');
+
+apply_filters_btn.addEventListener('click', () => {
+    console.log('filters applied');
+    apply_filters();
+});
+reset_filters_btn.addEventListener('click', () => {
+    console.log('filters resetted');
+    reset_filters();
+});
