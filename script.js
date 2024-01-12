@@ -77,7 +77,7 @@ generate_html = () => {
                     </div>
                 </div>
             </div>
-            <button class="add-to-cart">Добавить в корзину</button>
+            <button class="btn">Добавить в корзину</button>
         </div>
         `
     );
