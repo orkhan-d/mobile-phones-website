@@ -40,6 +40,20 @@
             </div>
             <hr>
             <div class="filter">
+                <p>Оперативная память</p>
+                <div class="from-to">
+                    <div class="input-with-label">
+                        <label for="from-ram">От:</label>
+                        <input name="from-ram" class="from-ram" type="number">
+                    </div>
+                    <div class="input-with-label">
+                        <label for="to-ram">До:</label>
+                        <input name="to-ram" class="to-ram" type="number">
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="filter">
                 <p>Производитель</p>
                 <div class="inline-filter">
                     <div class="inline">
@@ -56,6 +70,14 @@
                     </div>
                 </div>
             </div>
+            <hr>
+            <div class="filter">
+                <div class="inline">
+                    <input name="only-discounted" class="only-discounted" type="checkbox">
+                    <label for="only-discounted">Только со скидкой</label>
+                </div>
+            </div>
+            <hr>
         </div>
         <div id="phones"></div>
     </div>
