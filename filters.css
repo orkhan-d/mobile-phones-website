@@ -12,6 +12,10 @@
     height: 100%;
 }
 
+.filter-name {
+    font-weight: 700;
+}
+
 .filter {
     width: 100%;
     display: flex;
