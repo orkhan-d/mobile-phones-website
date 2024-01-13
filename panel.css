@@ -1,16 +1,16 @@
 .grid {
     display: grid;
     gap: 1em;
+    align-items: flex-start;
+    justify-content: flex-start;
+    height: min-content;
 }
 .search-sort-grid {
     display: grid;
+    width: max-content;
     grid-template-columns: 7fr 2fr;
-    grid-auto-rows: 1fr;
     gap: 1em;
-}
-
-.search-sort-grid select {
-    -webkit-appearance: menulist-button;
+    height: min-content;
 }
 
 .search-label {
