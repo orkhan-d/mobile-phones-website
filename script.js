@@ -261,7 +261,9 @@ modal.addEventListener('click', (event) => {
 
 document.querySelector('.cart').addEventListener('click', (event) => {
     modal.style.display = 'block';
-    const cart_html = cart.map(
+    const amount = cart.map(c => c.amount).reduce((a, b) => a+b, 0);
+    const sum = cart.map(c => c.phone.price*c.amount).reduce((a, b) => a+b, 0);
+    const cart_html = `<div class="cart-wrapper">`+cart.map(
         phone => `
         <div class="cart-phone shadow">
             <img src="${phone.phone.img}" alt="">
@@ -276,13 +278,17 @@ document.querySelector('.cart').addEventListener('click', (event) => {
                     :
                     `
                     <p class="phone-prop price-cart">${phone.phone.price}</p>
-                    <br>
                     `
                 }
             </div>
             <p class="phone-name">${phone.amount} штук</p>
         </div>
         `
-    ).join('')
+    ).join('')+`
+    </div>
+    <div class="grid-cart-all">
+        <p>${amount} товаров на сумму ${sum}</p>
+        <button class="btn">Купить</button>
+    </div>`
     document.querySelector('.modal-win').innerHTML+=cart_html;
 });

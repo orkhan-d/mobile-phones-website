@@ -16,6 +16,12 @@
     top: 1em;
     bottom: 1em;
     background-color: rgb(244, 244, 244);
+    border-radius: 1em;
+    overflow: scroll;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1em;
 }
 
 .cart-phone {
@@ -23,11 +29,11 @@
     grid-template-columns: 1fr 5fr 2fr 2fr;
     align-items: center;
     justify-content: center;
-    margin: 0.5em;
     padding: 1em;
     border-radius: 1em;
     height: 7em;
     background-color: rgb(244, 244, 244);
+    gap: 1em;
 }
 
 .cart-phone:not(:last-child) {
@@ -45,4 +51,10 @@
 .cart-phone img {
     aspect-ratio: 1/1;
     max-width: 100%;
+}
+
+.grid-cart-all {
+    display: grid;
+    grid-template-columns: 4fr 2fr;
+    gap: 1em;
 }
