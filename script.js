@@ -41,9 +41,12 @@ phones = [
     },
 ];
 
+let cart = [];
+
 let phones_to_show = phones.map(a => {return {...a}});
 
 generate_html = () => {
+
     const html = phones_to_show.map(
         phone => `
         <div class="phone shadow">
@@ -81,12 +84,54 @@ generate_html = () => {
                     </div>
                 </div>
             </div>
-            <button class="btn">Добавить в корзину</button>
+            <div class="controls" data-phone-id="${phone.id}">
+                ${
+                    (cart.filter(obj => obj.phoneId==phone.id).length>0 ? cart.filter(obj => obj.phoneId==phone.id)[0].amount : 0>0) ?
+                        `
+                            <button class="btn del-btn" data-phone-id="${phone.id}">-</button>
+                            <p>${cart.filter(obj => obj.phoneId==phone.id).length>0 ? cart.filter(obj => obj.phoneId==phone.id)[0].amount : 0}</p>
+                            <button class="btn add-btn" data-phone-id="${phone.id}">+</button>
+                        `
+                    :
+                        `<button class="btn add-to-cart-btn" data-phone-id="${phone.id}">Добавить в корзину</button>`
+                }
+            </div>
         </div>
         `
     );
     const phones_grid = document.getElementById('phones');
     phones_grid.innerHTML = html.join('');
+
+    const add_btns = document.querySelectorAll('.add-btn').forEach(btn => {
+        console.log(btn);
+        btn.addEventListener('click', (event) => {
+            cart.filter(obj => obj.phoneId==event.target.dataset.phoneId)[0].amount++;
+            generate_html();
+        });
+    });
+    const del_btns = document.querySelectorAll('.del-btn').forEach(btn => {
+        btn.addEventListener('click', (event) => {
+            cart.filter(obj => obj.phoneId==event.target.dataset.phoneId)[0].amount--;
+            generate_html();
+        });
+    });
+
+    const add_to_cart_btns = document.querySelectorAll('.add-to-cart-btn');
+    [...add_to_cart_btns].forEach(btn => {
+        btn.addEventListener('click', (event) => {
+            if (cart.filter(obj => obj.phoneId==event.target.dataset.phoneId).length>0) {
+                cart.filter(obj => obj.phoneId).forEach(obj => obj.amount++)
+            } else {
+                cart.push({
+                    phoneId: event.target.dataset.phoneId,
+                    phone: [...phones].filter(phone => phone.id==event.target.dataset.phoneId)[0],
+                    amount: 1
+                });
+            }
+
+            generate_html();
+        });
+    })
 };
 
 generate_html();
