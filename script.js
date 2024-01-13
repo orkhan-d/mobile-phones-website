@@ -239,5 +239,5 @@ search.addEventListener('input', () => {
         );
         generate_html();
     }
-
 })
+

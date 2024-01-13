@@ -42,6 +42,7 @@ input{
 }
 
 .cart {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -53,4 +54,19 @@ input{
     background-color: rgb(55, 55, 255);
     border-radius: 50%;
     cursor: pointer;
+}
+
+.cart-amount {
+    position: absolute;
+    color: white;
+    font-weight: 500;
+    top: 0;
+    left: 0;
+    height: 1.5em;
+    width:  1.5em;
+    background-color: red;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
