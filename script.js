@@ -148,3 +148,18 @@ reset_filters_btn.addEventListener('click', () => {
     console.log('filters resetted');
     reset_filters();
 });
+
+const search = document.querySelector('.search');
+
+search.addEventListener('input', () => {
+    if (search.value=="") {
+        apply_filters();
+    }
+    else{
+        phones_to_show = [...phones_to_show].filter(
+            phone => phone.name.includes(search.value)
+        );
+        generate_html();
+    }
+
+})
