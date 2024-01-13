@@ -103,16 +103,19 @@ generate_html = () => {
     phones_grid.innerHTML = html.join('');
 
     const add_btns = document.querySelectorAll('.add-btn').forEach(btn => {
-        console.log(btn);
         btn.addEventListener('click', (event) => {
             cart.filter(obj => obj.phoneId==event.target.dataset.phoneId)[0].amount++;
             generate_html();
+            document.querySelector('.cart-amount').innerText = cart.map(c => c.amount).reduce((a, b) => a+b, 0);
         });
     });
     const del_btns = document.querySelectorAll('.del-btn').forEach(btn => {
         btn.addEventListener('click', (event) => {
             cart.filter(obj => obj.phoneId==event.target.dataset.phoneId)[0].amount--;
+            cart = cart.filter(c => c.amount>0);
+
             generate_html();
+            document.querySelector('.cart-amount').innerText = cart.map(c => c.amount).reduce((a, b) => a+b, 0);
         });
     });
 
@@ -130,6 +133,7 @@ generate_html = () => {
             }
 
             generate_html();
+            document.querySelector('.cart-amount').innerText = cart.map(c => c.amount).reduce((a, b) => a+b, 0);
         });
     })
 };
@@ -161,7 +165,6 @@ const check_ram = (phone_ram) => {
 }
 
 const apply_filters = () => {
-    console.log(Boolean(only_discounted.value));
     phones_to_show = phones.filter(phone => (
         check_price(phone.price) && 
         check_rom(phone.rom) &&
@@ -169,6 +172,16 @@ const apply_filters = () => {
         makers.filter(cb => cb.checked).map(cb => cb.name).includes(phone.maker) &&
         (!only_discounted.checked || phone.discount)
     ));
+
+    if (search.value=="") {
+        apply_filters();
+    }
+    else{
+        phones_to_show = [...phones_to_show].filter(
+            phone => phone.name.includes(search.value)
+        );
+        generate_html();
+    }
 
     generate_html();
 };
@@ -190,11 +203,9 @@ const apply_filters_btn = document.querySelector('.apply-filters-btn');
 const reset_filters_btn = document.querySelector('.reset-filters-btn');
 
 apply_filters_btn.addEventListener('click', () => {
-    console.log('filters applied');
     apply_filters();
 });
 reset_filters_btn.addEventListener('click', () => {
-    console.log('filters resetted');
     reset_filters();
 });
 
@@ -239,5 +250,39 @@ search.addEventListener('input', () => {
         );
         generate_html();
     }
-})
+});
 
+const modal = document.querySelector('.modal');
+modal.addEventListener('click', (event) => {
+    if (event.target==modal) {
+        modal.style.display = 'none';
+    }
+});
+
+document.querySelector('.cart').addEventListener('click', (event) => {
+    modal.style.display = 'block';
+    const cart_html = cart.map(
+        phone => `
+        <div class="cart-phone shadow">
+            <img src="${phone.phone.img}" alt="">
+            <p class="phone-name">${phone.phone.name}</p>
+            <div class="prices">
+                ${
+                    phone.phone.discount ?
+                    `
+                    <p class="phone-prop old-price">${phone.phone.price}</p>
+                    <p class="phone-prop new-price">${Math.ceil(phone.phone.price*(1-phone.phone.discount/100))}</p>
+                    `
+                    :
+                    `
+                    <p class="phone-prop price-cart">${phone.phone.price}</p>
+                    <br>
+                    `
+                }
+            </div>
+            <p class="phone-name">${phone.amount} штук</p>
+        </div>
+        `
+    ).join('')
+    document.querySelector('.modal-win').innerHTML+=cart_html;
+});

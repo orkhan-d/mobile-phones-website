@@ -1,0 +1,48 @@
+.modal {
+    position: fixed;
+    z-index: 3;
+    background-color: rgba(0, 0, 0, 0.5);
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: none;
+}
+
+.modal-win{
+    position: absolute;
+    right: 1em;
+    left: 60%;
+    top: 1em;
+    bottom: 1em;
+    background-color: rgb(244, 244, 244);
+}
+
+.cart-phone {
+    display: grid;
+    grid-template-columns: 1fr 5fr 2fr 2fr;
+    align-items: center;
+    justify-content: center;
+    margin: 0.5em;
+    padding: 1em;
+    border-radius: 1em;
+    height: 7em;
+    background-color: rgb(244, 244, 244);
+}
+
+.cart-phone:not(:last-child) {
+    border-right: 1px solid white;
+}
+
+.prices-cart {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1em;
+}
+
+.cart-phone img {
+    aspect-ratio: 1/1;
+    max-width: 100%;
+}
