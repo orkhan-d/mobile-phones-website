@@ -1,5 +1,6 @@
 phones = [
     {
+        id: 1,
         img: 'TelShopMedia/1.jpg',
         name: '4" Смартфон DEXP A440 8 ГБ розовый',
         price: 3200,
@@ -9,6 +10,7 @@ phones = [
         maker: 'DEXP'
     },
     {
+        id: 2,
         img: 'TelShopMedia/2.jpg',
         name: 'Samsung Galaxy M52',
         price: 40999,
@@ -18,6 +20,7 @@ phones = [
         maker: 'Samsung'
     },
     {
+        id: 3,
         img: 'TelShopMedia/3.jpg',
         name: 'Смартфон POCO F3 Черный',
         price: 32999,
@@ -27,6 +30,7 @@ phones = [
         maker: 'POCO'
     },
     {
+        id: 4,
         img: 'TelShopMedia/4.jpg',
         name: 'Смартфон POCO F3 Белый',
         price: 34999,
@@ -150,6 +154,35 @@ reset_filters_btn.addEventListener('click', () => {
 });
 
 const search = document.querySelector('.search');
+const sort_select = document.querySelector('#sort');
+
+sort_select.addEventListener('change', (event) => {
+    switch (event.target.value) {
+        case "price-asc":
+            phones_to_show = [...phones_to_show].sort(
+                (p1, p2) => p1.price-p2.price
+            );
+            break;
+        case "price-desc":
+            phones_to_show = [...phones_to_show].sort(
+                (p1, p2) => p2.price-p1.price
+            );
+            break;
+        case "date-asc":
+            phones_to_show = [...phones_to_show].sort(
+                (p1, p2) => p1.id-p2.id
+            );
+            break;
+        case "date-desc":
+            phones_to_show = [...phones_to_show].sort(
+                (p1, p2) => p2.id-p1.id
+            );
+            break;
+        default:
+            break;
+    }
+    generate_html();
+});
 
 search.addEventListener('input', () => {
     if (search.value=="") {
