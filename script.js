@@ -173,10 +173,10 @@ const apply_filters = () => {
         (!only_discounted.checked || phone.discount)
     ));
 
-    if (search.value=="") {
+    
+    if (search.value!="") {
         apply_filters();
-    }
-    else{
+    }{
         phones_to_show = [...phones_to_show].filter(
             phone => phone.name.includes(search.value)
         );
