@@ -218,12 +218,13 @@ const apply_filters = () => {
 };
 
 const reset_filters = () => {
-    from_price.value = "";
-    to_price.value = "";
-    from_rom.value = "";
-    to_rom.value = "";
-    from_ram.value = "";
-    to_ram.value = "";
+    from_price.value = Math.min(...[...phones].map(p => p.price));
+    to_price.value = Math.max(...[...phones].map(p => p.price));
+    from_rom.value = Math.min(...[...phones].map(p => p.rom));
+    to_rom.value = Math.max(...[...phones].map(p => p.rom));
+    from_ram.value = Math.min(...[...phones].map(p => p.ram));
+    to_ram.value = Math.max(...[...phones].map(p => p.ram));
+    
     only_discounted.checked = false;
     makers.forEach(element => {
         element.checked = true
