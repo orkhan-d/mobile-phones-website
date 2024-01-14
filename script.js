@@ -41,12 +41,23 @@ phones = [
     },
 ];
 
+window.onbeforeunload = function(event)
+{
+    localStorage.setItem('from_price', from_price.value);
+    localStorage.setItem('to_price', to_price.value);
+    localStorage.setItem('from_rom', from_rom.value);
+    localStorage.setItem('to_rom', to_rom.value);
+    localStorage.setItem('from_ram', from_ram.value);
+    localStorage.setItem('to_ram', to_ram.value);
+    localStorage.setItem('only_discounted', only_discounted.checked);
+    return true;
+};
+
 let cart = [];
 
 let phones_to_show = phones.map(a => {return {...a}});
 
 generate_html = () => {
-
     const html = phones_to_show.map(
         phone => `
         <div class="phone shadow">
@@ -148,6 +159,15 @@ let from_ram = document.querySelector('.from-ram');
 let to_ram = document.querySelector('.to-ram');
 let only_discounted = document.querySelector('.only-discounted');
 let makers = [...document.querySelectorAll('.maker')];
+
+from_price.value = localStorage.getItem('from_price') ?? Math.min(...[...phones].map(p => p.price));
+to_price.value = localStorage.getItem('to_price') ?? Math.max(...[...phones].map(p => p.price));
+from_rom.value = localStorage.getItem('from_rom') ?? Math.min(...[...phones].map(p => p.rom));
+to_rom.value = localStorage.getItem('to_rom') ?? Math.max(...[...phones].map(p => p.rom));
+from_ram.value = localStorage.getItem('from_ram') ?? Math.min(...[...phones].map(p => p.ram));
+to_ram.value = localStorage.getItem('to_ram') ?? Math.max(...[...phones].map(p => p.ram));
+only_discounted.checked = localStorage.getItem('only_discounted') ?? false;
+
 
 const check_price = (phone_price) => {
     return (!from_price.value || phone_price >= Number(from_price.value)) &&
