@@ -178,7 +178,7 @@ const apply_filters = () => {
         apply_filters();
     }{
         phones_to_show = [...phones_to_show].filter(
-            phone => phone.name.includes(search.value)
+            phone => phone.name.toLowerCase().includes(search.value.toLowerCase())
         );
         generate_html();
     }
@@ -246,7 +246,7 @@ search.addEventListener('input', () => {
     }
     else{
         phones_to_show = [...phones_to_show].filter(
-            phone => phone.name.includes(search.value)
+            phone => phone.name.toLowerCase().includes(search.value.toLowerCase())
         );
         generate_html();
     }
